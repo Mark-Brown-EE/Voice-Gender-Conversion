@@ -1,0 +1,75 @@
+%% FEMALE to MALE %%%
+[audioIn,fs] = audioread('Female_Hello1.mp3');  % reads mp3 file
+ffta = fft(audioIn);                            % gets fft of inputted audio
+L = length(audioIn);                            %sets length of signal = L
+P2 = abs(ffta/L);                               %calculates magnitude vale of fft
+P1 = P2(1:L/2+1);                               %As fft of a real inputreturns an upper half which has identical magnitude as lower half,
+                                                %this gets rid of redundant information
+P1(2:end-1) = 2*P1(2:end-1);                    %multiplied by 2 to keep the correct total energy after halving signal
+fp = fs*(0:(L/2))/L;                            %multiplys by sampling frequency fs
+plot(fp,P1)                                     %plots Single-Sided Amplitude Spectrum of X(t) 
+hold on
+title('Single-Sided Amplitude Spectrum of X(t)')%sets title
+xlabel('f (Hz)')                                %sets x label
+ylabel('Magnitude')                             %sets y label
+sound(audioIn,fs)                               %plays audio file
+
+%Begin shifting pitch of signal
+nsemitones = -12;                               % sets nsemitones = -12 (1 octave)
+audioOut = shiftPitch(audioIn,nsemitones,1,1,0);% use shiftPitch to get a new signal audioOut, 1 octave lower
+ffta = fft(audioOut);                           % gets fft of shifted audio
+L = length(audioOut);                           % sets length of signal = L
+P2 = abs(ffta/L);                               %calculates magnitude vale of fft
+P1 = P2(1:L/2+1);                               %As fft of a real inputreturns an upper half which has identical magnitude as lower half,
+                                                %this gets rid of redundant information
+P1(2:end-1) = 2*P1(2:end-1);                    %multiplied by 2 to keep the correct total energy after halving signal
+fp = fs*(0:(L/2))/L;                            %multiplys by sampling frequency fs
+plot(fp,P1)                                     %plots Single-Sided Amplitude Spectrum of X(t) 
+hold on
+title('Single-Sided Amplitude Spectrum of X(t)')%sets title
+xlabel('f (Hz)')                                %sets x label
+ylabel('Magnitude')                             %sets y label
+legend('Female','Male')                         %sets legend for plot
+hold off
+
+xlim([0 500])                                   %sets x limits for plot
+ylim([0.0000 0.03])                             %sets y limits for plot
+pause(3.0);                                     %sets a pause of 3 seconds
+sound(audioOut,fs);                             %plays audio file
+
+%%% MALE to FEMALE %%%
+[audioIn,fs] = audioread('Male_Hello1.mp3');    % reads mp3 file
+ffta = fft(audioIn);                            % gets fft of inputted audio
+L = length(audioIn);                            %sets length of signal = L
+P2 = abs(ffta/L);                               %calculates magnitude vale of fft
+P1 = P2(1:L/2+1);                               %As fft of a real inputreturns an upper half which has identical magnitude as lower half,
+                                                %this gets rid of redundant information
+P1(2:end-1) = 2*P1(2:end-1);                    %multiplied by 2 to keep the correct total energy after halving signal
+fp = fs*(0:(L/2))/L;                            %multiplys by sampling frequency fs
+plot(fp,P1)                                     %plots Single-Sided Amplitude Spectrum of X(t) 
+hold on
+title('Single-Sided Amplitude Spectrum of X(t)')%sets title
+xlabel('f (Hz)')                                %sets x label
+ylabel('Magnitude')                             %sets y label
+sound(audioIn,fs)                               %plays audio file
+
+%Begin shifting pitch of signal
+nsemitones = 12;                                % sets nsemitones = -12 (1 octave)
+audioOut = shiftPitch(audioIn,nsemitones,1,1,0);% use shiftPitch to get a new signal audioOut, 1 octave lower
+ffta = fft(audioOut);                           % gets fft of shifted audio
+L = length(audioOut);                           % sets length of signal = L
+P2 = abs(ffta/L);                               %calculates magnitude vale of fft
+P1 = P2(1:L/2+1);                               %As fft of a real inputreturns an upper half which has identical magnitude as lower half,
+                                                %this gets rid of redundant information
+P1(2:end-1) = 2*P1(2:end-1);                    %multiplied by 2 to keep the correct total energy after halving signal
+fp = fs*(0:(L/2))/L;                            %multiplys by sampling frequency fs
+plot(fp,P1)                                     %plots Single-Sided Amplitude Spectrum of X(t) 
+hold on
+title('Single-Sided Amplitude Spectrum of X(t)')%sets title
+xlabel('f (Hz)')                                %sets x label
+ylabel('Magnitude')                             %sets y label
+legend('Male','Female')                         %sets legend for plot
+xlim([0 500])                                   %sets x limits for plot
+ylim([0.0000 0.03])                             %sets y limits for plot
+pause(3.0);                                     %sets a pause of 3 seconds
+sound(audioOut,fs);                             %plays audio file
